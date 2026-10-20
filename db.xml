@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.concrete5.org/doctrine-xml/0.5"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.concrete5.org/doctrine-xml/0.5 https://concretecms.github.io/doctrine-xml/doctrine-xml-0.5.xsd">
+
+    <table name="CommunityStoreShopifyImportItems" comment="Shopify products and images that have been imported">
+        <field name="id" type="integer">
+            <unsigned/>
+            <autoincrement/>
+            <key/>
+        </field>
+        <field name="itemType" type="string" size="20" comment="product or image">
+            <notnull/>
+        </field>
+        <field name="shopifyKey" type="string" size="255" comment="Shopify handle, or hash of the image path">
+            <notnull/>
+        </field>
+        <field name="targetID" type="integer" comment="Community Store product ID or Concrete file ID">
+            <unsigned/>
+            <notnull/>
+        </field>
+        <index name="UX_CSShopifyImportItemsKey">
+            <unique/>
+            <col>itemType</col>
+            <col>shopifyKey</col>
+        </index>
+    </table>
+
+    <table name="CommunityStoreShopifyImportResults" comment="Outcome of each product in an import run">
+        <field name="id" type="integer">
+            <unsigned/>
+            <autoincrement/>
+            <key/>
+        </field>
+        <field name="runID" type="string" size="32">
+            <fixed/>
+            <notnull/>
+        </field>
+        <field name="handle" type="string" size="255">
+            <notnull/>
+        </field>
+        <field name="status" type="string" size="10" comment="ok, warning or error">
+            <notnull/>
+        </field>
+        <field name="message" type="text">
+            <notnull/>
+        </field>
+        <field name="productID" type="integer">
+            <unsigned/>
+        </field>
+        <field name="createdAt" type="datetime">
+            <notnull/>
+        </field>
+        <index name="IX_CSShopifyImportResultsRun">
+            <col>runID</col>
+        </index>
+    </table>
+
+</schema>
